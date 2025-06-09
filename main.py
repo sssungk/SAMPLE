@@ -106,11 +106,10 @@ mbti_careers_with_reasons = {
 if mbti_input:
     st.markdown(f"## 🧬 당신의 MBTI: **{mbti_input}**")
 
-    if mbti_input in mbti_jobs:
+    if mbti_input in mbti_careers_with_reasons:
         st.success(f"🎯 {mbti_input}에게 어울리는 직업은 다음과 같아요!")
-        for job in mbti_jobs[mbti_input]:
-            st.markdown(f"- {job}")
-
+for job_reason in mbti_careers_with_reasons[mbti_input]:
+    st.markdown(f"- {job_reason}")
         st.balloons()  # 🎈 빵야!
     else:
         st.warning("해당 MBTI의 직업 정보가 아직 준비되지 않았어요 🙏")

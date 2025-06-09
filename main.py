@@ -1,13 +1,21 @@
 import streamlit as st
 
-# 🎨 앱 타이틀
+# 🎨 페이지 설정
 st.set_page_config(page_title="MBTI 직업 추천기", page_icon="🧠")
 
 st.title("🧠 MBTI 기반 직업 추천기")
-st.subheader("당신의 MBTI를 입력하면, 찰떡같은 직업을 추천해드려요! 💼✨")
+st.subheader("당신의 MBTI를 선택해보세요! 찰떡같은 직업을 추천해드릴게요 💼✨")
 
-# 📩 사용자 입력 받기
-mbti_input = st.text_input("👉 MBTI를 입력해주세요 (예: INFP, ESTJ 등)", max_chars=4).upper()
+# 📌 MBTI 구성 요소
+ie = st.selectbox("1️⃣ 에너지 방향", ["I (내향)", "E (외향)"])
+ns = st.selectbox("2️⃣ 인식 방식", ["N (직관)", "S (감각)"])
+ft = st.selectbox("3️⃣ 판단 기준", ["F (감정)", "T (사고)"])
+jp = st.selectbox("4️⃣ 생활 양식", ["J (판단)", "P (인식)"])
+
+# 🧩 조합 만들기
+mbti_input = (
+    ie[0] + ns[0] + ft[0] + jp[0]
+)  # 예: I + N + F + P → INFP
 
 # 🎯 MBTI - 직업 매핑
 mbti_jobs = {
@@ -19,17 +27,18 @@ mbti_jobs = {
     "ENFP": ["크리에이터 🎥", "강연자 🎤", "광고 기획자 🧠"],
     "ISFJ": ["간호사 🏥", "초등 교사 🍎", "도서관 사서 📚"],
     "ESTP": ["영업사원 💼", "구조대원 🚑", "프로 운동선수 🏋️"],
-    # ... 더 추가 가능
+    # 필요한 만큼 추가 가능
 }
 
-# ✅ 입력 검증 및 추천
+# ✅ 추천 결과
 if mbti_input:
+    st.markdown(f"## 🧬 당신의 MBTI: **{mbti_input}**")
+
     if mbti_input in mbti_jobs:
-        st.success(f"🎉 {mbti_input}에게 어울리는 직업들입니다!")
+        st.success(f"🎯 {mbti_input}에게 어울리는 직업은 다음과 같아요!")
         for job in mbti_jobs[mbti_input]:
             st.markdown(f"- {job}")
 
-        # 🎈 풍선 터트리기
-        st.balloons()
+        st.balloons()  # 🎈 빵야!
     else:
-        st.error("⚠️ 올바른 MBTI를 입력해주세요! (예: INFP, ENTJ)")
+        st.warning("해당 MBTI의 직업 정보가 아직 준비되지 않았어요 🙏")

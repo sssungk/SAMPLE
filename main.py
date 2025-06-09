@@ -1,23 +1,19 @@
 import streamlit as st
 
-# 🎨 페이지 설정
-st.set_page_config(page_title="MBTI 직업 추천기", page_icon="🧠")
+st.set_page_config(page_title="MBTI 직업 추천기", page_icon="🧠", layout="centered")
 
-st.title("🧠 MBTI 기반 직업 추천기")
-st.subheader("당신의 MBTI를 선택해보세요! 찰떡같은 직업을 추천해드릴게요 💼✨")
+st.title("🧠 MBTI 기반 직업 추천 서비스")
+st.write("당신의 MBTI 유형에 맞는 추천 직업을 확인해보세요! 🎯")
 
-# 📌 MBTI 구성 요소
-ie = st.selectbox("1️⃣ 에너지 방향", ["I (내향)", "E (외향)"])
-ns = st.selectbox("2️⃣ 인식 방식", ["N (직관)", "S (감각)"])
-ft = st.selectbox("3️⃣ 판단 기준", ["F (감정)", "T (사고)"])
-jp = st.selectbox("4️⃣ 생활 양식", ["J (판단)", "P (인식)"])
+# 선택형 MBTI 입력
+mbti_input = st.selectbox("당신의 MBTI를 선택해주세요:", [
+    "INTJ", "INTP", "ENTJ", "ENTP",
+    "INFJ", "INFP", "ENFJ", "ENFP",
+    "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+    "ISTP", "ISFP", "ESTP", "ESFP"
+])
 
-# 🧩 조합 만들기
-mbti_input = (
-    ie[0] + ns[0] + ft[0] + jp[0]
-)  # 예: I + N + F + P → INFP
-
-# 🎯 MBTI - 직업 매핑
+# MBTI별 직업 + 추천 이유 딕셔너리
 mbti_careers_with_reasons = {
     "INTJ": [
         "전략기획가 🧠 - 체계적이고 미래지향적인 사고를 하는 INTJ에게 잘 맞아요.",
@@ -101,15 +97,13 @@ mbti_careers_with_reasons = {
     ],
 }
 
+# 결과 출력
+if mbti_input in mbti_careers_with_reasons:
+    st.success(f"🎯 {mbti_input}에게 어울리는 직업과 이유는 다음과 같아요!")
 
-# ✅ 추천 결과
-if mbti_input:
-    st.markdown(f"## 🧬 당신의 MBTI: **{mbti_input}**")
+    for job_reason in mbti_careers_with_reasons[mbti_input]:
+        st.markdown(f"- {job_reason}")
 
-    if mbti_input in mbti_careers_with_reasons:
-        st.success(f"🎯 {mbti_input}에게 어울리는 직업은 다음과 같아요!")
-for job_reason in mbti_careers_with_reasons[mbti_input]:
-    st.markdown(f"- {job_reason}")
-        st.balloons()  # 🎈 빵야!
-    else:
-        st.warning("해당 MBTI의 직업 정보가 아직 준비되지 않았어요 🙏")
+    st.balloons()
+else:
+    st.warning("해당 MBTI의 정보가 아직 준비되지 않았어요 🙏")
